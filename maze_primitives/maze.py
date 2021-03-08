@@ -83,7 +83,7 @@ class Maze:
 
     def make_maze_mazey(self):
         last_edge = ""
-        while self.does_path_exist("0,0", "4,4"):
+        while self.does_path_exist("0,0", "24,24"):
             edge_to_remove = self.edges[random.randint(0,len(self.edges)-1)]
             last_edge = edge_to_remove
             self.edges.remove(edge_to_remove)
@@ -99,7 +99,7 @@ class Maze:
         self.last_wall.append(last_edge)
 
 if __name__ == "__main__":
-    maze = Maze("5x5")
+    maze = Maze("25x25")
     # maze.nodes["0,1"]["edges"] = []
     # maze.nodes["1,1"]["edges"] = []
     # maze.nodes["2,1"]["edges"] = []
