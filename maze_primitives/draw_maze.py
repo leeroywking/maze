@@ -1,16 +1,22 @@
 # from maze_maker.maze_primitives.maze import Maze
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 import sys
 
 def draw_maze(walls):
     img = Image.new("RGB", (1000, 1000), (255, 255, 255))
     img.save("image.png", "PNG")
     draw = ImageDraw.Draw(img)
-    # draw.line((0,100,200,100),fill=200,width=5)
-    # draw.point((50,50),fill=255)
-    # for x in range(25):
-    #     for y in range(25):
-    #         draw.point((x*40,y*40), fill=255)
+    draw.line((0,0,0,1000),fill=200,width=5)
+    draw.line((0,1000,1000,1000),fill=200,width=5)
+    draw.line((1000,0,1000,1000),fill=200,width=5)
+    draw.line((0,0,1000,0),fill=200,width=5)
+    # get a font
+    fnt = ImageFont.truetype("aquire-font/Aquire-BW0ox.otf", 8)
+    # get a drawing context
+    # draw multiline text
+    draw.multiline_text((5,5), "Start", font=fnt, fill=(0, 0, 0))
+    draw.multiline_text((975,980), "End", font=fnt, fill=(0, 0, 0))
+
     for wall in walls:
         [node1, node2] = wall.split(":")
         [node1_x, node1_y] = [int(node1.split(",")[0]) , int(node1.split(",")[1])]

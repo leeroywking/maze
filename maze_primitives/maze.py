@@ -7,7 +7,7 @@ class Maze:
         self.length = int(size.split("x")[0])
         self.height = int(size.split("x")[1])
         self.start = "0,0"
-        self.exit = "24,24"
+        self.exit = f"{self.length-1},{self.height-1}"
         self.nodes = self.build_nodes(size)
         self.edges = self.build_edges(size)
         self.walls = []
@@ -61,24 +61,6 @@ class Maze:
                         to_check_nodes.append(edge)
         return False
 
-    def do_multiple_paths_exist(self, start, end):
-        checked_nodes = []
-        to_check_nodes = [start]
-        success_count = 0
-        while len(to_check_nodes) > 0 or success_count > 1:
-            curr_node = to_check_nodes.pop(0)
-            if curr_node not in checked_nodes:
-                checked_nodes.append(curr_node)
-                if curr_node == end:
-                    success_count += 1
-                else:
-                    for edge in self.nodes[curr_node]["edges"]:
-                        to_check_nodes.append(edge)
-        if success_count > 1:
-            return True
-        else:
-            return False
-
     def show_maze_data(self):
         # print(f"nodes:{self.nodes}\n\nedges:{self.edges}")
         print(self.walls)
@@ -100,8 +82,6 @@ class Maze:
         self.walls.append(edge)
 
     def make_maze_mazey(self):
-        # last_edge = "23,24:24,24"
-        # while self.does_path_exist(self.start, self.exit):
         while len(self.edges) > 0:
             edge_to_remove = self.edges[random.randint(0, len(self.edges) - 1)]
             self.add_wall(edge_to_remove)
@@ -110,6 +90,7 @@ class Maze:
             for node in self.nodes:
                 if self.does_path_exist(self.start,node) == False:
                     wall_works = False
+                    break
             if wall_works == False:
                 self.remove_wall(edge_to_remove)
 
@@ -117,14 +98,6 @@ class Maze:
 
 if __name__ == "__main__":
     maze = Maze("25x25")
-    # maze.nodes["0,1"]["edges"] = []
-    # maze.nodes["1,1"]["edges"] = []
-    # maze.nodes["2,1"]["edges"] = []
-    # if maze.does_path_exist("0,0", "2,2"):
-    #     print("A path exists!")
-    # else:
-    #     print("The path is cut")
-    # maze.show_maze_data()
     maze.make_maze_mazey()
     maze.show_maze_data()
 
