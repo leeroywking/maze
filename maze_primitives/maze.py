@@ -46,25 +46,29 @@ class Maze:
         # print(edges)
         return edges
 
-    def does_path_exist(self, start, end):
+    def does_path_exist(self, start, end, already_visited_nodes = set()):
         # gonna do a depth first search
         checked_nodes = []
-        to_check_nodes = [start]
+        to_check_nodes = [end]
+        #already_visited_nodes is a set of nodes visited in a previous check
         while len(to_check_nodes) > 0:
             curr_node = to_check_nodes.pop(0)
+            # already_visited_nodes.add(curr_node)
             if curr_node not in checked_nodes:
                 checked_nodes.append(curr_node)
-                if curr_node == end:
-                    return True
+                if curr_node == start or curr_node in already_visited_nodes:
+                    already_visited_nodes.add(curr_node)
+                    return True, already_visited_nodes
                 else:
+                    already_visited_nodes.add(curr_node)
                     for edge in self.nodes[curr_node]["edges"]:
                         to_check_nodes.append(edge)
-        return False
+        return False, already_visited_nodes
 
     def show_maze_data(self):
         # print(f"nodes:{self.nodes}\n\nedges:{self.edges}")
         print(self.walls)
-        print(self.last_wall)
+        # print(self.last_wall)
 
     def remove_wall(self, edge):
         [first_coord, second_coord] = edge.split(":")
@@ -85,14 +89,15 @@ class Maze:
         while len(self.edges) > 0:
             edge_to_remove = self.edges[random.randint(0, len(self.edges) - 1)]
             self.add_wall(edge_to_remove)
-            wall_works = True
+            # wall_works = True
             print(f"{len(self.edges)} possible walls remain")
+            already_visited_nodes = set()
             for node in self.nodes:
-                if self.does_path_exist(self.start,node) == False:
-                    wall_works = False
+                path_exists , already_visited_nodes = self.does_path_exist(self.start,node, already_visited_nodes)
+                if path_exists == False:
+                    self.remove_wall(edge_to_remove)
                     break
-            if wall_works == False:
-                self.remove_wall(edge_to_remove)
+
 
 
 
