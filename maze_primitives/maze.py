@@ -1,10 +1,13 @@
 import random
 
+
 class Maze:
     def __init__(self, size):
         self.size = size
         self.length = int(size.split("x")[0])
         self.height = int(size.split("x")[1])
+        self.start = "0,0"
+        self.exit = "24,24"
         self.nodes = self.build_nodes(size)
         self.edges = self.build_edges(size)
         self.walls = []
@@ -57,12 +60,12 @@ class Maze:
                     for edge in self.nodes[curr_node]["edges"]:
                         to_check_nodes.append(edge)
         return False
-    
+
     def do_multiple_paths_exist(self, start, end):
         checked_nodes = []
         to_check_nodes = [start]
         success_count = 0
-        while len(to_check_nodes) > 0 or success_count >1:
+        while len(to_check_nodes) > 0 or success_count > 1:
             curr_node = to_check_nodes.pop(0)
             if curr_node not in checked_nodes:
                 checked_nodes.append(curr_node)
@@ -71,7 +74,7 @@ class Maze:
                 else:
                     for edge in self.nodes[curr_node]["edges"]:
                         to_check_nodes.append(edge)
-        if success_count >1:
+        if success_count > 1:
             return True
         else:
             return False
@@ -81,22 +84,36 @@ class Maze:
         print(self.walls)
         print(self.last_wall)
 
-    def make_maze_mazey(self):
-        last_edge = ""
-        while self.does_path_exist("0,0", "24,24"):
-            edge_to_remove = self.edges[random.randint(0,len(self.edges)-1)]
-            last_edge = edge_to_remove
-            self.edges.remove(edge_to_remove)
-            [first_coord, second_coord] = edge_to_remove.split(":")
-            self.nodes[first_coord]["edges"].remove(second_coord)
-            self.nodes[second_coord]["edges"].remove(first_coord)
-            self.walls.append(edge_to_remove)
-        #add last edge back in
-        [first_coord, second_coord] = last_edge.split(":")
+    def remove_wall(self, edge):
+        [first_coord, second_coord] = edge.split(":")
         self.nodes[first_coord]["edges"].append(second_coord)
         self.nodes[second_coord]["edges"].append(first_coord)
-        self.walls.remove(last_edge)
-        self.last_wall.append(last_edge)
+        self.walls.remove(edge)
+        self.last_wall.append(edge)
+
+    def add_wall(self, edge):
+        # print(edge)
+        self.edges.remove(edge)
+        [first_coord, second_coord] = edge.split(":")
+        self.nodes[first_coord]["edges"].remove(second_coord)
+        self.nodes[second_coord]["edges"].remove(first_coord)
+        self.walls.append(edge)
+
+    def make_maze_mazey(self):
+        # last_edge = "23,24:24,24"
+        # while self.does_path_exist(self.start, self.exit):
+        while len(self.edges) > 0:
+            edge_to_remove = self.edges[random.randint(0, len(self.edges) - 1)]
+            self.add_wall(edge_to_remove)
+            wall_works = True
+            print(f"{len(self.edges)} possible walls remain")
+            for node in self.nodes:
+                if self.does_path_exist(self.start,node) == False:
+                    wall_works = False
+            if wall_works == False:
+                self.remove_wall(edge_to_remove)
+
+
 
 if __name__ == "__main__":
     maze = Maze("25x25")
