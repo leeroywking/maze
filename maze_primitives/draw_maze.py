@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import sys
 
-def draw_maze(walls):
+def draw_maze(walls, filename = "image2.png"):
     img = Image.new("RGB", (1000, 1000), (255, 255, 255))
     img.save("image.png", "PNG")
     draw = ImageDraw.Draw(img)
@@ -27,7 +27,7 @@ def draw_maze(walls):
             #horizontal line
             draw.line((node2_x*40,node2_y*40,(node2_x +1) *40,node2_y *40),fill=200,width=5)
             pass
-    img.save("image2.png", "PNG")
+    img.save(f"{filename}.png", "PNG")
     # img.show()
 
 
