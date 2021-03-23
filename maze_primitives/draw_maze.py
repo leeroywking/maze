@@ -11,9 +11,9 @@ def draw_maze(walls):
     draw.line((1000,0,1000,1000),fill=200,width=5)
     draw.line((0,0,1000,0),fill=200,width=5)
     # get a font
-    fnt = ImageFont.truetype("aquire-font/Aquire-BW0ox.otf", 8)
-    draw.multiline_text((5,5), "Start", font=fnt, fill=(0, 0, 0))
-    draw.multiline_text((975,980), "End", font=fnt, fill=(0, 0, 0))
+    # fnt = ImageFont.truetype("./aquire-font/Aquire-BW0ox.otf", 8)
+    # draw.multiline_text((5,5), "Start", font=fnt, fill=(0, 0, 0))
+    # draw.multiline_text((975,980), "End", font=fnt, fill=(0, 0, 0))
 
     for wall in walls:
         [node1, node2] = wall.split(":")
@@ -28,7 +28,7 @@ def draw_maze(walls):
             draw.line((node2_x*40,node2_y*40,(node2_x +1) *40,node2_y *40),fill=200,width=5)
             pass
     img.save("image2.png", "PNG")
-    img.show()
+    # img.show()
 
 
 if __name__=="__main__":
