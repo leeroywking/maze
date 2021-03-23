@@ -13,7 +13,7 @@ def index():
 
 
 @app.route("/size/<cell_size>/<res_size>")
-def size_route(cell_size, res_size = "1000x1000"):
+def size_route_custom_res(cell_size, res_size = "1000x1000"):
     # size = request.args["size"]
     print(cell_size)
     length = int(res_size.split("x")[0])
@@ -22,6 +22,14 @@ def size_route(cell_size, res_size = "1000x1000"):
     maze = Maze(cell_size)
     maze.make_maze_mazey()
     draw_maze(maze.walls, str(cell_size), length,width, str(cell_size))
+    return send_file(f"{cell_size}.png")
+
+@app.route("/size/<cell_size>")
+def size_route(cell_size):
+    print(cell_size)
+    maze = Maze(cell_size)
+    maze.make_maze_mazey()
+    draw_maze(maze.walls, str(cell_size), 1000,1000, str(cell_size))
     return send_file(f"{cell_size}.png")
 
 if __name__ == '__main__':
