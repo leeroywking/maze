@@ -12,13 +12,17 @@ def index():
     return send_file("./image2.png")
 
 
-@app.route("/size/<size>")
-def size_route(size):
+@app.route("/size/<cell_size>/<res_size>")
+def size_route(cell_size, res_size = "1000x1000"):
     # size = request.args["size"]
-    maze = Maze(size)
+    print(cell_size)
+    length = int(res_size.split("x")[0])
+    width = int(res_size.split("x")[1])
+    # size = "10x10"
+    maze = Maze(cell_size)
     maze.make_maze_mazey()
-    draw_maze(maze.walls, size)
-    return send_file(f"{size}.png")
+    draw_maze(maze.walls, str(cell_size), length,width, str(cell_size))
+    return send_file(f"{cell_size}.png")
 
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support

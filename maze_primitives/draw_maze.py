@@ -2,14 +2,17 @@
 from PIL import Image, ImageDraw, ImageFont
 import sys
 
-def draw_maze(walls, filename = "image2.png"):
-    img = Image.new("RGB", (1000, 1000), (255, 255, 255))
-    img.save("image.png", "PNG")
+def draw_maze(walls,  size, width = 1000,height = 1000, filename = "image2"):
+    img = Image.new("RGB", (width, height), (255, 255, 255))
+    [cells_width , cells_height] = size.split("x")
+    horiz_line_scaling = width / int(cells_width)
+    vert_line_scaling = height / int(cells_height)
+    # img.save("image.png", "PNG")
     draw = ImageDraw.Draw(img)
-    draw.line((0,0,0,1000),fill=200,width=5)
-    draw.line((0,1000,1000,1000),fill=200,width=5)
-    draw.line((1000,0,1000,1000),fill=200,width=5)
-    draw.line((0,0,1000,0),fill=200,width=5)
+    draw.line((0,0,0,height),fill=200,width=5)
+    draw.line((0,height,width,height),fill=200,width=5)
+    draw.line((width,0,width,height),fill=200,width=5)
+    draw.line((0,0,height,0),fill=200,width=5)
     # get a font
     # fnt = ImageFont.truetype("./aquire-font/Aquire-BW0ox.otf", 8)
     # draw.multiline_text((5,5), "Start", font=fnt, fill=(0, 0, 0))
@@ -21,11 +24,11 @@ def draw_maze(walls, filename = "image2.png"):
         [node2_x, node2_y] = [int(node2.split(",")[0]), int(node2.split(",")[1])]
         if node1_x - node2_x != 0:
             #vertical line
-            draw.line((node2_x*40,node2_y*40,node2_x*40,(node2_y +1) *40),fill=200,width=5)
+            draw.line((node2_x* horiz_line_scaling,node2_y*vert_line_scaling,node2_x*horiz_line_scaling,(node2_y +1) *vert_line_scaling),fill=200,width=5)
             pass
         elif node1_y - node2_y != 0:
             #horizontal line
-            draw.line((node2_x*40,node2_y*40,(node2_x +1) *40,node2_y *40),fill=200,width=5)
+            draw.line((node2_x* horiz_line_scaling,node2_y* vert_line_scaling,(node2_x +1) *horiz_line_scaling,node2_y *vert_line_scaling),fill=200,width=5)
             pass
     img.save(f"{filename}.png", "PNG")
     # img.show()

@@ -11,6 +11,8 @@ class Mazethread(object):
 
     def run(self):
         while True:
-            maze = Maze("25x25")
+            size = "25x25"
+            maze = Maze(size)
             maze.make_maze_mazey()
-            draw_maze(maze.walls)
+            # maze.show_maze_data()
+            draw_maze(maze.walls, size, 1000,1000)

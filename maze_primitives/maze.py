@@ -96,7 +96,7 @@ class Maze:
 
 
 if __name__ == "__main__":
-    maze = Maze("25x25")
+    maze = Maze("10x10")
     maze.make_maze_mazey()
-    # maze.show_maze_data()
+    maze.show_maze_data()
 
