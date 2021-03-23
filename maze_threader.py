@@ -15,4 +15,4 @@ class Mazethread(object):
             maze = Maze(size)
             maze.make_maze_mazey()
             # maze.show_maze_data()
-            draw_maze(maze.walls, size, 1000,1000)
+            draw_maze(maze.walls, size, 2000,2000)
