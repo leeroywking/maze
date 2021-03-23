@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import sys
 
-def draw_maze(walls,  size, width = 1000,height = 1000):
+def draw_maze(walls,  size, width = 1000,height = 1000, filename = "image2"):
     img = Image.new("RGB", (width, height), (255, 255, 255))
     [cells_width , cells_height] = size.split("x")
     horiz_line_scaling = width / int(cells_width)
@@ -14,9 +14,9 @@ def draw_maze(walls,  size, width = 1000,height = 1000):
     draw.line((width,0,width,height),fill=200,width=5)
     draw.line((0,0,height,0),fill=200,width=5)
     # get a font
-    fnt = ImageFont.truetype("aquire-font/Aquire-BW0ox.otf", 8)
-    draw.multiline_text((5,5), "Start", font=fnt, fill=(0, 0, 0)) # needs work
-    draw.multiline_text((975,980), "End", font=fnt, fill=(0, 0, 0)) # needs work
+    # fnt = ImageFont.truetype("./aquire-font/Aquire-BW0ox.otf", 8)
+    # draw.multiline_text((5,5), "Start", font=fnt, fill=(0, 0, 0))
+    # draw.multiline_text((975,980), "End", font=fnt, fill=(0, 0, 0))
 
     for wall in walls:
         [node1, node2] = wall.split(":")
@@ -30,8 +30,8 @@ def draw_maze(walls,  size, width = 1000,height = 1000):
             #horizontal line
             draw.line((node2_x* horiz_line_scaling,node2_y* vert_line_scaling,(node2_x +1) *horiz_line_scaling,node2_y *vert_line_scaling),fill=200,width=5)
             pass
-    img.save("image2.png", "PNG")
-    img.show()
+    img.save(f"{filename}.png", "PNG")
+    # img.show()
 
 
 if __name__=="__main__":
