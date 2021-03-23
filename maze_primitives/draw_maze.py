@@ -7,7 +7,7 @@ def draw_maze(walls,  size, width = 1000,height = 1000, filename = "image2"):
     [cells_width , cells_height] = size.split("x")
     horiz_line_scaling = width / int(cells_width)
     vert_line_scaling = height / int(cells_height)
-    img.save("image.png", "PNG")
+    # img.save("image.png", "PNG")
     draw = ImageDraw.Draw(img)
     draw.line((0,0,0,height),fill=200,width=5)
     draw.line((0,height,width,height),fill=200,width=5)

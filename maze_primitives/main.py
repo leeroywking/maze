@@ -4,7 +4,7 @@ from maze import Maze
 from draw_maze import draw_maze
 
 if __name__ == "__main__":
-    size = "25x25"
+    size = "10x10"
     maze = Maze(size)
     maze.make_maze_mazey()
     # maze.show_maze_data()
